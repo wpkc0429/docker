@@ -1,0 +1,50 @@
+# For more information: https://laravel.com/docs/sail
+version: '3'
+services:
+    html:
+        image: ubuntu20-php81:220403
+        ports:
+            - '80:80'
+            - '3000:3000'
+        volumes:
+            - '/Users/steps/Workspace/html:/var/www/html'
+            - '/Users/steps/Workspace/container/php8.1/apache2:/etc/apache2'
+            - '/Users/steps/Workspace/container/php8.1/log:/var/log/apache2'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+    phpmyadmin:
+        image: 'phpmyadmin'
+        ports:
+            - '8080:80'
+        environment:
+            PMA_HOST: 'mysql'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+    mysql:
+        image: 'mysql/mysql-server:8.0'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        networks:
+            - sail
+        volumes:
+            - '/Users/steps/Workspace/mysql:/var/lib/mysql'
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            retries: 3
+            timeout: 5s
+networks:
+    sail:
+        driver: bridge
