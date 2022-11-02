@@ -18,7 +18,7 @@ RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y software-properties-common zip unzip git curl zlibc vim \
     && add-apt-repository ppa:ondrej/php \
     && apt-get update \
-    && apt-get install -y php8.1 php8.1-mysql php8.1-gd php8.1-zip php8.1-mbstring php8.1-pdo php8.1-xml php8.1-curl \
+    && apt-get install -y php8.1 php8.1-mysql php8.1-gd php8.1-zip php8.1-mbstring php8.1-pdo php8.1-xml php8.1-curl php8.1-ldap \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \

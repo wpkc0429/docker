@@ -16,7 +16,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y software-properties-common zip unzip git curl vim \
-    && apt-get install -y php php-mysql php-gd php-zip php-mbstring php-pdo php-xml php-curl \
+    && apt-get install -y php php-mysql php-gd php-zip php-mbstring php-pdo php-xml php-curl php-ldap \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - \

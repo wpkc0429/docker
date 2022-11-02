@@ -16,7 +16,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y zip unzip git curl zlibc vim \
-    && apt-get install -y php php-pdo php-mbstring php-mysql php-xml php-gd php-fpm php-zip php-curl
+    && apt-get install -y php php-pdo php-mbstring php-mysql php-xml php-gd php-fpm php-zip php-curl php-ldap
 
 RUN apt-get update \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
