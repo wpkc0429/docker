@@ -2,18 +2,14 @@
 version: '3'
 services:
     html:
-        image: ubuntu20-php81:220403
+        image: ubuntu22-php81
         ports:
             - '80:80'
             - '3000:3000'
         volumes:
-            - '/Users/steps/Workspace/html:/var/www/html'
-            - '/Users/steps/Workspace/container/php8.1/apache2:/etc/apache2'
-            - '/Users/steps/Workspace/container/php8.1/log:/var/log/apache2'
-        extra_hosts:
-            - 'host.docker.internal:host-gateway'
-        networks:
-            - sail
+            - 'C:\Users\ks\Workspace\html:/var/www/html'
+            - 'C:\Users\ks\Workspace\container\php81\apache2:/etc/apache2'
+            - 'C:\Users\ks\Workspace\container\php81\log:/var/log/apache2'
         depends_on:
             - mysql
     phpmyadmin:
@@ -22,8 +18,6 @@ services:
             - '8080:80'
         environment:
             PMA_HOST: 'mysql'
-        networks:
-            - sail
         depends_on:
             - mysql
     mysql:
@@ -33,18 +27,9 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: "%"
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        networks:
-            - sail
         volumes:
-            - '/Users/steps/Workspace/mysql:/var/lib/mysql'
+            - 'C:\Users\ks\Workspace\mysql:/var/lib/mysql'
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
-networks:
-    sail:
-        driver: bridge
