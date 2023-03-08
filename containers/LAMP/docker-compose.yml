@@ -8,8 +8,8 @@ services:
             - '3000:3000'
         volumes:
             - '/var/www/docker/html:/var/www/html'
-            - '/var/www/docker/container\php81\apache2:/etc/apache2'
-            - '/var/www/docker/container\php81\log:/var/log/apache2'
+            - '/var/www/docker/container/php81/apache2:/etc/apache2'
+            - '/var/www/docker/container/php81/log:/var/log/apache2'
         networks:
             - sail    
         depends_on:
@@ -21,8 +21,8 @@ services:
             - '3000:3000'  
         volumes:
             - '/var/www/docker/html:/var/www/html'
-            - '/var/www/docker/container\php74\apache2:/etc/apache2'
-            - '/var/www/docker/container\php74\log:/var/log/apache2'
+            - '/var/www/docker/container/php74/apache2:/etc/apache2'
+            - '/var/www/docker/container/php74/log:/var/log/apache2'
         networks:
             - sail
         depends_on:
