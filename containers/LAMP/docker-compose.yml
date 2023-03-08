@@ -1,23 +1,40 @@
 # For more information: https://laravel.com/docs/sail
 version: '3'
 services:
-    html:
+    ubuntu22_php81:
         image: ubuntu22-php81
         ports:
             - '80:80'
             - '3000:3000'
         volumes:
-            - 'C:\Users\ks\Workspace\html:/var/www/html'
-            - 'C:\Users\ks\Workspace\container\php81\apache2:/etc/apache2'
-            - 'C:\Users\ks\Workspace\container\php81\log:/var/log/apache2'
+            - '/var/www/docker/html:/var/www/html'
+            - '/var/www/docker/container\php81\apache2:/etc/apache2'
+            - '/var/www/docker/container\php81\log:/var/log/apache2'
+        networks:
+            - sail    
         depends_on:
             - mysql
+    ubuntu20_php74:
+        image: ubuntu20-php74
+        ports:
+            - '80:80'
+            - '3000:3000'  
+        volumes:
+            - '/var/www/docker/html:/var/www/html'
+            - '/var/www/docker/container\php74\apache2:/etc/apache2'
+            - '/var/www/docker/container\php74\log:/var/log/apache2'
+        networks:
+            - sail
+        depends_on:
+            - mysql                
     phpmyadmin:
         image: 'phpmyadmin'
         ports:
             - '8080:80'
         environment:
             PMA_HOST: 'mysql'
+        networks:
+            - sail    
         depends_on:
             - mysql
     mysql:
@@ -27,9 +44,14 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ROOT_HOST: "%"
+        networks:
+            - sail    
         volumes:
-            - 'C:\Users\ks\Workspace\mysql:/var/lib/mysql'
+            - '/var/www/docker/mysql:/var/lib/mysql'
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
+networks:
+    sail:
+        driver: bridge
